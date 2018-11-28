@@ -1,6 +1,6 @@
 
-path_str:"D:/"
-/ path_str:"/Users/hewei/data/"
+/ path_str:"D:/"
+path_str:"/Users/hewei/test/data/"
 path:hsym`$path_str
 
 files:key path
@@ -9,13 +9,12 @@ inputs: files where check each files  / files:DEPBC12345678201806.csv, LOABC1234
 
 FMD5: {(6#x),"",/string md5 x}
 
-process:{
+process:{[f]
 	filename:path_str,(-3_string[f]),"dat";
-	DEP: flip `DataDT`T1`T2`T3!("****";",") 0: hsym[path_str,string[f]];
-	LOA: flip `DataDT`T1`T2`T3`T4`T5!("**S***";",") 0: hsym[path_str,string[f]];
-	LOA: update T3: FMD5 each T3 where T2 = `1;
+	DEP: flip `DataDT`T1`T2`T3!("****";",") 0: hsym[`$path_str,string[f]];
+	LOA: flip `DataDT`T1`T2`T3`T4`T5!("**S***";",") 0: hsym[`$path_str,string[f]];
+	LOA: update T3: FMD5 each T3 from LOA where T2 = `1;
 	hsym[`$filename] 0: 1_"|" 0: DEP;
-	hsym[`$filename] 0: 1_"|" 0: LOA
-}
+	hsym[`$filename] 0: 1_"|" 0: LOA }
 
 process each inputs
